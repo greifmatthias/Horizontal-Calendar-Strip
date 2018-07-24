@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="White">#FFFFFFFF</color>
+    <color name="White_semitrans">#AAFFFFFF</color>
+
+    <color name="Dark">#FF000000</color>
+    <color name="Dark_semitrans">#AA000000</color>
+    <color name="Dark_lighttrans">#10000000</color>
+</resources>
