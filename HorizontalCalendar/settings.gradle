@@ -1,1 +1,1 @@
-include ':app', ':horizontalcalendarstrip'
+include ':app', ':horizontalcalendarstrip', ':horizontalcalendarstrip-0.0.1'
