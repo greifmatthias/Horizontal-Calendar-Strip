@@ -19,7 +19,6 @@
             android:id="@+id/tvMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="August"
             android:textStyle="bold"
             android:textSize="25dp"
             android:textAllCaps="true"
@@ -29,7 +28,6 @@
             android:id="@+id/tvYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2017"
             android:textSize="25dp"
             android:layout_marginLeft="5dp"
             android:textColor="#AA000000"/>
