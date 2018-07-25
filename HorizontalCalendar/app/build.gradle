@@ -27,7 +27,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'be.greifmatthias:horizontalcalendarstrip:0.0.1-test-1'
+//    Maven
+    implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.0'
 
+//    AAR file, testing before pushing to maven
 //    implementation (name: 'horizontalcalendarstrip', ext: 'aar')
+
+//    Local project
+//    implementation project(path: ':horizontalcalendarstrip')
 }

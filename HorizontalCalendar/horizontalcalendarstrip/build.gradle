@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/greifmatthias/Horizontal-Calendar-Strip'
     gitUrl = 'https://github.com/greifmatthias/Horizontal-Calendar-Strip.git'
 
-    libraryVersion = '0.0.1-test-1'
+    libraryVersion = '0.1.0'
 
     developerId = 'greifmatthias'
     developerName = 'Greif Matthias'
@@ -30,8 +30,8 @@ android {
     defaultConfig {
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 2
-        versionName "0.0.2"
+        versionCode 1
+        versionName "Alpaca"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

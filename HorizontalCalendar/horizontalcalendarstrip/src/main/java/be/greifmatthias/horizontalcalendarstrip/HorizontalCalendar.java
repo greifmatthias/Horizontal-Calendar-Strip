@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -73,7 +74,7 @@ public class HorizontalCalendar extends LinearLayout {
         c.set(Calendar.MILLISECOND, 0);
 
         for(int i = 0; i < 7; i++){
-            c.add(Calendar.DAY_OF_MONTH, -i);
+            c.add(Calendar.DAY_OF_MONTH, -1);
 
             dates.add(new DateItem(c.getTime()));
         }
@@ -98,6 +99,11 @@ public class HorizontalCalendar extends LinearLayout {
 //                    Add date to recyclerview
                     adapter.addItem(new DateItem(c.getTime()));
                 }
+
+//                    Check date
+                Calendar clastvisible = ((Adapter)recyclerView.getAdapter()).getItem(lastvisible).getDate();
+                _tvMonth.setText(new SimpleDateFormat("MMMM").format(clastvisible.getTime()));
+                _tvYear.setText(new SimpleDateFormat("yyyy").format(clastvisible.getTime()));
             }
         });
 
