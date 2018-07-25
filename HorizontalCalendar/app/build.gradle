@@ -29,5 +29,5 @@ dependencies {
 
 //    implementation 'be.greifmatthias:horizontalcalendarstrip:0.0.2'
 
-    implementation (name: 'horizontalcalendarstrip', ext: 'aar')
+    implementation (name: 'horizontalcalendarstriprelease', ext: 'aar')
 }
