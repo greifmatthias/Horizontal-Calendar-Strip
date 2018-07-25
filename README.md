@@ -24,4 +24,3 @@ dependencies {
 Be free to use. References are appreciated, but not required.
 
 Have a nice day
-Hope you like my work
