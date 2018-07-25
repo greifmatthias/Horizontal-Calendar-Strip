@@ -1,6 +1,8 @@
 # What is this?
-Horizontal Calendar Strip is an custom UI components that adds an horizontal strip similar as a Date-picker.
+Horizontal Calendar Strip is an custom Android UI components that adds an horizontal strip similar as a Date-picker.
 Scroll left/right to reveal other dates, click on the tile to select date.
+
+Keep in mind at this moment this library requires SDK >= 22.
 
 ## What can this already do?
 * Basic horizontal scroll picker
