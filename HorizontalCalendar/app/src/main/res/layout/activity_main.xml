@@ -6,20 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar
-        android:id="@+id/hcCalendar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"></be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar>
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
 
-    <TextView
-        android:id="@+id/tvTest"
+        <be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar
+            android:id="@+id/hcCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar>
+
+        <TextView
+            android:id="@+id/tvTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello there, Pick a date to see it here."
+            android:layout_margin="19dp"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello there"
-        android:padding="19dp"
-        android:textAllCaps="true"
-        android:background="#000000"
-        android:textColor="#FFFFFF"
-        android:layout_alignParentBottom="true"/>
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:background="#C8E6C9"
+            android:padding="19dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horizontal Calendar Strip Library\nVersion: 0.1.1"/>
+
+        <Button
+            android:id="@+id/btnGit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open it up in the Github"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="#81C784"/>
+
+    </LinearLayout>
 </RelativeLayout>
