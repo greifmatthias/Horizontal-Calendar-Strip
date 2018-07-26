@@ -15,7 +15,7 @@ This project is available on the JCenter Repo, which means easy installation.
 Add to dependencies in the app build.gradle file for the latest version:
 
 dependencies {
-  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.0'
+  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.1'
 }
 
 ## TODO (Near future functionalities)
