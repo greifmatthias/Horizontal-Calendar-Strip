@@ -6,8 +6,8 @@ android {
         applicationId "be.greifmatthias.horizontalcalendar"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 1
-        versionName "0.1.0-Alpaca"
+        versionCode 11
+        versionName "0.1.1-Alpaca"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,7 +28,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 //    Maven
-    implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.0'
+    implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.1'
 
 //    AAR file, testing before pushing to maven
 //    implementation (name: 'horizontalcalendarstrip', ext: 'aar')
