@@ -33,6 +33,8 @@ public class HorizontalCalendar extends LinearLayout {
     private TextView _tvYear;
     private RecyclerView _rvDates;
 
+    private View _oldview;
+
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -79,8 +81,37 @@ public class HorizontalCalendar extends LinearLayout {
             dates.add(new DateItem(c.getTime()));
         }
 
-        final Adapter adapter = new Adapter(dates);
+        final Adapter adapter = new Adapter(dates, getContext());
         this._rvDates.setAdapter(adapter);
+
+//        Touch handlers
+        RecyclerViewTouchHandler tileclickHandler = new RecyclerViewTouchHandler(getContext(), _rvDates, new RecyclerViewTouchHandler.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                //                Temp set stylings
+//                Old view
+                if(_oldview != null) {
+                    ((LinearLayout) _oldview.findViewById(R.id.llRoot)).setBackgroundColor(getContext().getResources().getColor(R.color.Dark_lighttrans));
+                    ((TextView) _oldview.findViewById(R.id.tvDate)).setTextColor(getContext().getResources().getColor(R.color.Dark));
+                    ((TextView) _oldview.findViewById(R.id.tvDay)).setTextColor(getContext().getResources().getColor(R.color.Dark_semitrans));
+                }
+
+//                New view
+                ((LinearLayout)view.findViewById(R.id.llRoot)).setBackgroundColor(getContext().getResources().getColor(R.color.Dark));
+                ((TextView)view.findViewById(R.id.tvDate)).setTextColor(getContext().getResources().getColor(R.color.White));
+                ((TextView)view.findViewById(R.id.tvDay)).setTextColor(getContext().getResources().getColor(R.color.White_semitrans));
+//                Set old for next
+                _oldview = view;
+
+                adapter.setSelected(position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        });
+        this._rvDates.addOnItemTouchListener(tileclickHandler);
 
 //        Check scroll changes for recyclerview
         this._rvDates.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -106,23 +137,6 @@ public class HorizontalCalendar extends LinearLayout {
                 _tvYear.setText(new SimpleDateFormat("yyyy").format(clastvisible.getTime()));
             }
         });
-
-//        Set touch handler
-        RecyclerViewTouchHandler handler = new RecyclerViewTouchHandler(getContext(),
-                this._rvDates, new RecyclerViewTouchHandler.ClickListener() {
-            @Override
-            public void onClick(View view, final int position) {
-//                Pass updated selection to recycleview
-                adapter.setSelected(position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        });
-//        Add touch handler
-        this._rvDates.addOnItemTouchListener(handler);
     }
 
     public void setTouchHandler(RecyclerViewTouchHandler.ClickListener clickListener){
@@ -133,6 +147,10 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     public Date getSelected(){
-        return ((Adapter)this._rvDates.getAdapter()).getSelected().getDate().getTime();
+        if(((Adapter)this._rvDates.getAdapter()).getSelected() != null) {
+            return ((Adapter) this._rvDates.getAdapter()).getSelected().getDate().getTime();
+        }
+
+        return null;
     }
 }

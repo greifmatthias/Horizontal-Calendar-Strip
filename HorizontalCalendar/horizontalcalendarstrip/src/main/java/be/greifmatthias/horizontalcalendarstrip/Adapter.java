@@ -17,9 +17,11 @@ import java.util.Locale;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
     private List<DateItem> _dates = new ArrayList<>();
+    private Context _context;
 
-    public Adapter(List<DateItem> dates) {
-        _dates = dates;
+    public Adapter(List<DateItem> items, Context context) {
+        this._dates = items;
+        this._context = context;
     }
 
     @NonNull
@@ -31,8 +33,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
-        holder.bindData(_dates.get(position));
+    public void onBindViewHolder(@NonNull DateViewHolder holder, final int position) {
+        DateItem item = getItem(position);
+
+//            Get date
+        Calendar c = item.getDate();
+
+//            Set Text
+        holder._tvDate.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
+
+        DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
+        holder._tvDay.setText(dfs.getShortWeekdays()[c.get(Calendar.DAY_OF_WEEK)]);
+
+//            Set backgroundcolor if selected
+        if(item.isSelected()){
+            holder._llRoot.setBackgroundColor(_context.getResources().getColor(R.color.Dark));
+            holder._tvDate.setTextColor(_context.getResources().getColor(R.color.White));
+            holder._tvDay.setTextColor(_context.getResources().getColor(R.color.White_semitrans));
+        }else{
+//            Revert possible stylings
+            holder._llRoot.setBackgroundColor(_context.getResources().getColor(R.color.Dark_lighttrans));
+            holder._tvDate.setTextColor(_context.getResources().getColor(R.color.Dark));
+            holder._tvDay.setTextColor(_context.getResources().getColor(R.color.Dark_semitrans));
+        }
     }
 
     @Override
@@ -89,8 +112,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
         private TextView _tvDay;
         private LinearLayout _llRoot;
 
-        private Context _context;
-
         public DateViewHolder(View itemView) {
             super(itemView);
 
@@ -98,32 +119,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
             this._tvDate = (TextView)itemView.findViewById(R.id.tvDate);
             this._tvDay = (TextView)itemView.findViewById(R.id.tvDay);
             this._llRoot = (LinearLayout) itemView.findViewById(R.id.llRoot);
-
-//            Get context
-            this._context = itemView.getContext();
-        }
-
-        public void bindData(DateItem date) {
-//            Get date
-            Calendar c = date.getDate();
-
-//            Set Text
-            this._tvDate.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-
-            DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
-            this._tvDay.setText(dfs.getShortWeekdays()[c.get(Calendar.DAY_OF_WEEK)]);
-
-//            Set backgroundcolor if selected
-            if(date.isSelected()){
-                this._llRoot.setBackgroundColor(_context.getResources().getColor(R.color.Dark));
-                this._tvDate.setTextColor(_context.getResources().getColor(R.color.White));
-                this._tvDay.setTextColor(_context.getResources().getColor(R.color.White_semitrans));
-            }else{
-//            Revert possible stylings
-                this._llRoot.setBackgroundColor(_context.getResources().getColor(R.color.Dark_lighttrans));
-                this._tvDate.setTextColor(_context.getResources().getColor(R.color.Dark));
-                this._tvDay.setTextColor(_context.getResources().getColor(R.color.Dark_semitrans));
-            }
         }
     }
 }
