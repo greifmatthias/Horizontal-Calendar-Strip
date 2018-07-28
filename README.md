@@ -15,11 +15,11 @@ This project is available on the JCenter Repo, which means easy installation.
 Add to dependencies in the app build.gradle file for the latest version:
 
 dependencies {
-  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.1'
+  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.2'
 }
 
 ## TODO (Near future functionalities)
-* Custom date tiles
+* Custom date tiles, kind of possible at the moment, need some improvements
 * Label styling
 * Default selection
 * Min/max daterange 
