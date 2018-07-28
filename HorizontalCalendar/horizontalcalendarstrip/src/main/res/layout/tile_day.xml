@@ -6,20 +6,10 @@
     android:layout_height="90dp"
     android:background="@color/White"
     android:layout_marginLeft="19dp"
-    android:padding="10dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvDate"
+    <FrameLayout
+        android:id="@+id/flContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="25"
-        android:textSize="25dp" />
-
-    <TextView
-        android:id="@+id/tvDay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mon"
-        android:textAllCaps="true"/>
+        android:layout_height="match_parent"></FrameLayout>
 </LinearLayout>
