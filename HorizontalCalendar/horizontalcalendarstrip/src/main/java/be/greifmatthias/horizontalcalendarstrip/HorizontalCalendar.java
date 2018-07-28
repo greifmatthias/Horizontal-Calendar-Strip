@@ -81,29 +81,16 @@ public class HorizontalCalendar extends LinearLayout {
             dates.add(new DateItem(c.getTime()));
         }
 
-        final Adapter adapter = new Adapter(dates, getContext());
+        final Adapter adapter = new Adapter(dates, getContext(), null);
         this._rvDates.setAdapter(adapter);
 
 //        Touch handlers
         RecyclerViewTouchHandler tileclickHandler = new RecyclerViewTouchHandler(getContext(), _rvDates, new RecyclerViewTouchHandler.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //                Temp set stylings
-//                Old view
-                if(_oldview != null) {
-                    ((LinearLayout) _oldview.findViewById(R.id.llRoot)).setBackgroundColor(getContext().getResources().getColor(R.color.Dark_lighttrans));
-                    ((TextView) _oldview.findViewById(R.id.tvDate)).setTextColor(getContext().getResources().getColor(R.color.Dark));
-                    ((TextView) _oldview.findViewById(R.id.tvDay)).setTextColor(getContext().getResources().getColor(R.color.Dark_semitrans));
-                }
-
-//                New view
-                ((LinearLayout)view.findViewById(R.id.llRoot)).setBackgroundColor(getContext().getResources().getColor(R.color.Dark));
-                ((TextView)view.findViewById(R.id.tvDate)).setTextColor(getContext().getResources().getColor(R.color.White));
-                ((TextView)view.findViewById(R.id.tvDay)).setTextColor(getContext().getResources().getColor(R.color.White_semitrans));
-//                Set old for next
-                _oldview = view;
-
                 adapter.setSelected(position);
+
+                _rvDates.scrollToPosition(position);
             }
 
             @Override
