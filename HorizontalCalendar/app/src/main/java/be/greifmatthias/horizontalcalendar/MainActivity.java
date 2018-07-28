@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar;
 import be.greifmatthias.horizontalcalendarstrip.RecyclerViewTouchHandler;
+import be.greifmatthias.horizontalcalendarstrip.View.DefaultTileLayout;
+import be.greifmatthias.horizontalcalendarstrip.View.TileLayout;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +22,9 @@ public class MainActivity extends Activity {
 
 //        Calendar
         final HorizontalCalendar calendar = (HorizontalCalendar)findViewById(R.id.hcCalendar);
+
+        TileLayout layout = new DefaultTileLayout();
+        calendar.setTileLayout(layout);
 
         calendar.setTouchHandler(new RecyclerViewTouchHandler.ClickListener() {
             @Override

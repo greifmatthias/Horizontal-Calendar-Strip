@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.greifmatthias.horizontalcalendarstrip.View.DefaultTileLayout;
 import be.greifmatthias.horizontalcalendarstrip.View.TileLayout;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
@@ -24,10 +25,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
         this._dates = items;
         this._context = context;
 
-        if(tileLayout != null){
+        if(this._tileLayout != null){
             this._tileLayout = tileLayout;
         }else{
-            this._tileLayout = new TileLayout();
+            this._tileLayout = new DefaultTileLayout();
         }
     }
 

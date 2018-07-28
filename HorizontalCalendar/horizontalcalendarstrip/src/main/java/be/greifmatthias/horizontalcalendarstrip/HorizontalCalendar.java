@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import be.greifmatthias.horizontalcalendarstrip.View.TileLayout;
+
 public class HorizontalCalendar extends LinearLayout {
     private boolean _showYear;
     private int _labelColor_month;
@@ -33,7 +35,10 @@ public class HorizontalCalendar extends LinearLayout {
     private TextView _tvYear;
     private RecyclerView _rvDates;
 
-    private View _oldview;
+    private TileLayout _tilelayout;
+
+    private RecyclerViewTouchHandler _tileclickHandler;
+    private RecyclerView.OnScrollListener _stripscrollHandler;
 
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -67,63 +72,8 @@ public class HorizontalCalendar extends LinearLayout {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         this._rvDates.setLayoutManager(layoutManager);
 
-//        Set adapter with data
-        List<DateItem> dates = new ArrayList<>();
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-
-        for(int i = 0; i < 7; i++){
-            c.add(Calendar.DAY_OF_MONTH, -1);
-
-            dates.add(new DateItem(c.getTime()));
-        }
-
-        final Adapter adapter = new Adapter(dates, getContext(), null);
-        this._rvDates.setAdapter(adapter);
-
-//        Touch handlers
-        RecyclerViewTouchHandler tileclickHandler = new RecyclerViewTouchHandler(getContext(), _rvDates, new RecyclerViewTouchHandler.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                adapter.setSelected(position);
-
-                _rvDates.scrollToPosition(position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        });
-        this._rvDates.addOnItemTouchListener(tileclickHandler);
-
-//        Check scroll changes for recyclerview
-        this._rvDates.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-                int itemcount = recyclerView.getAdapter().getItemCount();
-                int lastvisible = layoutManager.findLastVisibleItemPosition();
-
-                boolean end = lastvisible + 5 >= itemcount;
-                if(itemcount > 0 && end){
-//                    Generate lower date
-                    Calendar c = adapter.getItem(adapter.getItemCount() - 1).getDate();
-                    c.add(Calendar.DAY_OF_MONTH, -1);
-
-//                    Add date to recyclerview
-                    adapter.addItem(new DateItem(c.getTime()));
-                }
-
-//                    Check date
-                Calendar clastvisible = ((Adapter)recyclerView.getAdapter()).getItem(lastvisible).getDate();
-                _tvMonth.setText(new SimpleDateFormat("MMMM").format(clastvisible.getTime()));
-                _tvYear.setText(new SimpleDateFormat("yyyy").format(clastvisible.getTime()));
-            }
-        });
+//        Generate view with data
+        this.setupView();
     }
 
     public void setTouchHandler(RecyclerViewTouchHandler.ClickListener clickListener){
@@ -139,5 +89,80 @@ public class HorizontalCalendar extends LinearLayout {
         }
 
         return null;
+    }
+
+    public void setTileLayout(TileLayout layout){
+        this._tilelayout = layout;
+
+        setupView();
+    }
+
+    private void setupView(){
+//        Set adapter with data
+        List<DateItem> dates = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        for(int i = 0; i < 7; i++){
+            c.add(Calendar.DAY_OF_MONTH, -1);
+
+            dates.add(new DateItem(c.getTime()));
+        }
+
+        final Adapter adapter = new Adapter(dates, getContext(), this._tilelayout);
+        this._rvDates.setAdapter(adapter);
+
+//        Touch handlers
+        if(_tileclickHandler != null) {
+            this._rvDates.removeOnItemTouchListener(_tileclickHandler);
+        }
+
+        _tileclickHandler = new RecyclerViewTouchHandler(getContext(), _rvDates, new RecyclerViewTouchHandler.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                adapter.setSelected(position);
+
+                _rvDates.scrollToPosition(position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        });
+        this._rvDates.addOnItemTouchListener(_tileclickHandler);
+
+//        Check scroll changes for recyclerview
+        if(_stripscrollHandler == null) {
+            this._rvDates.removeOnScrollListener(_stripscrollHandler);
+        }
+
+        _stripscrollHandler = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int itemcount = recyclerView.getAdapter().getItemCount();
+                int lastvisible = layoutManager.findLastVisibleItemPosition();
+
+                boolean end = lastvisible + 5 >= itemcount;
+                if (itemcount > 0 && end) {
+//                    Generate lower date
+                    Calendar c = adapter.getItem(adapter.getItemCount() - 1).getDate();
+                    c.add(Calendar.DAY_OF_MONTH, -1);
+
+//                    Add date to recyclerview
+                    adapter.addItem(new DateItem(c.getTime()));
+                }
+
+//                    Check date
+                Calendar clastvisible = ((Adapter) recyclerView.getAdapter()).getItem(lastvisible).getDate();
+                _tvMonth.setText(new SimpleDateFormat("MMMM").format(clastvisible.getTime()));
+                _tvYear.setText(new SimpleDateFormat("yyyy").format(clastvisible.getTime()));
+            }
+        };
+        this._rvDates.addOnScrollListener(_stripscrollHandler);
     }
 }
