@@ -4,7 +4,7 @@ Scroll left/right to reveal other dates, click on the tile to select date.
 
 Keep in mind at this moment this library requires SDK >= 22.
 
-Want a quick check of it is something you need? Install a sample from the Google Play Store at: https://play.google.com/store/apps/details?id=be.greifmatthias.horizontalcalendar
+Want a quick check if it is something you need? Install a sample from the Google Play Store at: https://play.google.com/store/apps/details?id=be.greifmatthias.horizontalcalendar
 
 ## What can this already do?
 * Basic horizontal scroll picker
