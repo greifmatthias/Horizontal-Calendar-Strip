@@ -4,7 +4,7 @@ Scroll left/right to reveal other dates, click on the tile to select date.
 
 Keep in mind at this moment this library requires SDK >= 22.
 
-Want a quick check of it is something you need? Install a sample from the Google Play Store at: https://play.google.com/store/apps/details?id=be.greifmatthias.horizontalcalendar
+Want a quick check if it is something you need? Install a sample from the Google Play Store at: https://play.google.com/store/apps/details?id=be.greifmatthias.horizontalcalendar
 
 ## What can this already do?
 * Basic horizontal scroll picker
@@ -15,11 +15,11 @@ This project is available on the JCenter Repo, which means easy installation.
 Add to dependencies in the app build.gradle file for the latest version:
 
 dependencies {
-  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.1'
+  implementation 'be.greifmatthias:horizontalcalendarstrip:0.1.2'
 }
 
 ## TODO (Near future functionalities)
-* Custom date tiles
+* Custom date tiles, kind of possible at the moment, need some improvements
 * Label styling
 * Default selection
 * Min/max daterange 
