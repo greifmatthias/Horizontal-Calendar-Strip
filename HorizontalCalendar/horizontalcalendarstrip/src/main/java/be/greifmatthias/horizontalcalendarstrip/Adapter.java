@@ -82,15 +82,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
             }
         }
 
+        if(position != oldposition) {
 //        Update old
-        if(oldselected != null){
-            oldselected.deselect();
-            this.notifyItemChanged(oldposition);
-        }
+            if (oldselected != null) {
+                oldselected.deselect();
+                this.notifyItemChanged(oldposition);
+            }
 
 //        Select new
-        this.getItem(position).select();
-        this.notifyItemChanged(position);
+            this.getItem(position).select();
+            this.notifyItemChanged(position);
+        }
     }
 
     public DateItem getSelected(){
