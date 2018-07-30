@@ -10,9 +10,6 @@
         android:id="@+id/llLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="19dp"
-        android:paddingTop="19dp"
-        android:paddingRight="19dp"
         android:orientation="horizontal">
 
         <TextView
@@ -38,7 +35,6 @@
         android:id="@+id/rvDates"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingTop="11dp"
-        android:paddingBottom="20dp"></android.support.v7.widget.RecyclerView>
+        android:paddingTop="10dp"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
