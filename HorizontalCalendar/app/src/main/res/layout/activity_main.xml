@@ -15,7 +15,9 @@
         <be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar
             android:id="@+id/hcCalendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="19dp"></be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar>
 
         <TextView
             android:id="@+id/tvTest"

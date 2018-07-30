@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
+import be.greifmatthias.horizontalcalendarstrip.DateItem;
 import be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar;
 import be.greifmatthias.horizontalcalendarstrip.RecyclerViewTouchHandler;
-import be.greifmatthias.horizontalcalendarstrip.View.DefaultTileLayout;
 import be.greifmatthias.horizontalcalendarstrip.View.TileLayout;
 
 public class MainActivity extends Activity {
@@ -23,7 +25,13 @@ public class MainActivity extends Activity {
 //        Calendar
         final HorizontalCalendar calendar = (HorizontalCalendar)findViewById(R.id.hcCalendar);
 
-        TileLayout layout = new DefaultTileLayout();
+        TileLayout layout = new TileLayout(R.layout.sample_selected, R.layout.sample_default) {
+            @Override
+            public void bind(View tile, DateItem item, boolean selected) {
+                Calendar c = item.getDate();
+                ((TextView)tile.findViewById(R.id.tvDate)).setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
+            }
+        };
         calendar.setTileLayout(layout);
 
         calendar.setTouchHandler(new RecyclerViewTouchHandler.ClickListener() {
