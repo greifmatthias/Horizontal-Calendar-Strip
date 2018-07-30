@@ -25,7 +25,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
         this._dates = items;
         this._context = context;
 
-        if(this._tileLayout != null){
+        if(tileLayout != null){
             this._tileLayout = tileLayout;
         }else{
             this._tileLayout = new DefaultTileLayout();
