@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 
-import be.greifmatthias.horizontalcalendarstrip.DateItem;
 import be.greifmatthias.horizontalcalendarstrip.HorizontalCalendar;
-import be.greifmatthias.horizontalcalendarstrip.RecyclerViewTouchHandler;
-import be.greifmatthias.horizontalcalendarstrip.View.TileLayout;
 
 public class MainActivity extends Activity {
 
@@ -25,31 +23,28 @@ public class MainActivity extends Activity {
 //        Calendar
         final HorizontalCalendar calendar = (HorizontalCalendar)findViewById(R.id.hcCalendar);
 
-        TileLayout layout = new TileLayout(R.layout.sample_selected, R.layout.sample_default) {
-            @Override
-            public void bind(View tile, DateItem item, boolean selected) {
-                Calendar c = item.getDate();
-                ((TextView)tile.findViewById(R.id.tvDate)).setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-            }
-        };
-        calendar.setTileLayout(layout);
+//        TileLayout layout = new TileLayout(R.layout.sample_selected, R.layout.sample_default) {
+//            @Override
+//            public void bind(View tile, DateItem item, boolean selected) {
+//                Calendar c = item.getDate();
+//                ((TextView)tile.findViewById(R.id.tvDate)).setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
+//            }
+//        };
+//        calendar.setTileLayout(layout);
 
-        calendar.setTouchHandler(new RecyclerViewTouchHandler.ClickListener() {
+        calendar.setOnChanged(new HorizontalCalendar.onChangeListener() {
             @Override
-            public void onClick(View view, int position) {
-                TextView t = (TextView)findViewById(R.id.tvTest);
-                if(calendar.getSelected() != null) {
-                    t.setText(calendar.getSelected().toLocaleString());
-                }else{
-                    t.setText("Rip!!");
-                }
-            }
+            public void selectChanged(Date date) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
 
-            @Override
-            public void onLongClick(View view, int position) {
-
+                ((TextView)findViewById(R.id.tvTest)).setText(c.getTime().toLocaleString());
             }
         });
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, -25);
+        calendar.setSelected(c.getTime());
 
 //        Github button
         Button btnGit = findViewById(R.id.btnGit);

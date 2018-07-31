@@ -3,6 +3,7 @@ package be.greifmatthias.horizontalcalendarstrip;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -76,13 +77,6 @@ public class HorizontalCalendar extends LinearLayout {
         this.setupView();
     }
 
-    public void setTouchHandler(RecyclerViewTouchHandler.ClickListener clickListener){
-        if(this._rvDates != null) {
-//            Add touch handler
-            this._rvDates.addOnItemTouchListener(new RecyclerViewTouchHandler(getContext(), this._rvDates, clickListener));
-        }
-    }
-
     public Date getSelected(){
         if(((Adapter)this._rvDates.getAdapter()).getSelected() != null) {
             return ((Adapter) this._rvDates.getAdapter()).getSelected().getDate().getTime();
@@ -97,6 +91,24 @@ public class HorizontalCalendar extends LinearLayout {
         setupView();
     }
 
+    public void setSelected(Date date){
+        ((Adapter)this._rvDates.getAdapter()).setSelected(date);
+
+//        Pass to listener
+        if(_listener != null) {
+            _listener.selectChanged(((Adapter) _rvDates.getAdapter()).getSelected().getDate().getTime());
+        }
+
+//        Scroll to requested element
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _rvDates.scrollToPosition(((Adapter) _rvDates.getAdapter()).getSelectedPosition());
+
+            }
+        }, 200);
+    }
+
     private void setupView(){
 //        Set adapter with data
         List<DateItem> dates = new ArrayList<>();
@@ -107,15 +119,16 @@ public class HorizontalCalendar extends LinearLayout {
         c.set(Calendar.MILLISECOND, 0);
 
         for(int i = 0; i < 7; i++){
-            c.add(Calendar.DAY_OF_MONTH, -1);
-
             dates.add(new DateItem(c.getTime()));
+
+            c.add(Calendar.DAY_OF_MONTH, -1);
         }
 
         final Adapter adapter = new Adapter(dates, getContext(), this._tilelayout);
         this._rvDates.setAdapter(adapter);
 
 //        Touch handlers
+//        Reset if needed
         if(_tileclickHandler != null) {
             this._rvDates.removeOnItemTouchListener(_tileclickHandler);
         }
@@ -123,9 +136,16 @@ public class HorizontalCalendar extends LinearLayout {
         _tileclickHandler = new RecyclerViewTouchHandler(getContext(), _rvDates, new RecyclerViewTouchHandler.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+//                Update adapter data
                 adapter.setSelected(position);
 
-                _rvDates.scrollToPosition(position);
+//                Pass to listener
+                if(_listener != null) {
+                    _listener.selectChanged(((Adapter) _rvDates.getAdapter()).getSelected().getDate().getTime());
+                }
+
+//                Scroll to clicked element
+                _rvDates.scrollToPosition(((Adapter) _rvDates.getAdapter()).getSelectedPosition());
             }
 
             @Override
@@ -164,5 +184,14 @@ public class HorizontalCalendar extends LinearLayout {
             }
         };
         this._rvDates.addOnScrollListener(_stripscrollHandler);
+    }
+
+    private onChangeListener _listener;
+    public interface onChangeListener{
+        public void selectChanged(Date date);
+    }
+
+    public void setOnChanged(onChangeListener listener){
+        this._listener = listener;
     }
 }

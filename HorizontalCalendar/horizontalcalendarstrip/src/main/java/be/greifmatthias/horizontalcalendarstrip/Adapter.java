@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import be.greifmatthias.horizontalcalendarstrip.View.DefaultTileLayout;
@@ -20,6 +22,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
     private Context _context;
 
     private TileLayout _tileLayout;
+
+    private RecyclerView _parent;
 
     public Adapter(List<DateItem> items, Context context, @Nullable TileLayout tileLayout) {
         this._dates = items;
@@ -52,6 +56,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
 
 //        Bind information to view
         this._tileLayout.bind(holder._flContent, getItem(position), getItem(position).isSelected());
+
+//        Set size
+        int childh = holder._flContent.getChildAt(0).getMinimumHeight();
+        int childw = holder._flContent.getChildAt(0).getMinimumWidth();
+
+        holder._flContent.setLayoutParams(new FrameLayout.LayoutParams(childw, childh));
     }
 
     @Override
@@ -95,14 +105,59 @@ public class Adapter extends RecyclerView.Adapter<Adapter.DateViewHolder> {
         }
     }
 
-    public DateItem getSelected(){
+    public void setSelected(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+//        Find
+        int i = 0;
+        boolean got = false;
         for(DateItem d : this._dates){
-            if(d.isSelected()){
-                return d;
+            if(c.get(Calendar.YEAR) == d.getDate().get(Calendar.YEAR) && c.get(Calendar.DAY_OF_YEAR) == d.getDate().get(Calendar.DAY_OF_YEAR)){
+                got = true;
+                break;
+            }
+            i++;
+        }
+
+        int position = 0;
+        if(got){
+            position = i;
+        }else{
+            if(c.getTime().getTime() < getItem(getItemCount() - 1).getDate().getTime().getTime()){
+                Calendar added = Calendar.getInstance();
+                added.setTime(getItem(getItemCount() - 1).getDate().getTime());
+
+                while (added.getTime().getTime() >= c.getTime().getTime()){
+                    added.add(Calendar.DAY_OF_MONTH, -1);
+
+                    DateItem add = new DateItem(added.getTime());
+                    addItem(add);
+                }
+
+                position = getItemCount() - 1;
             }
         }
 
-        return null;
+        final int p = position;
+
+        setSelected(p);
+    }
+
+    public DateItem getSelected(){
+        return getItem(getSelectedPosition());
+    }
+
+    public int getSelectedPosition(){
+        int i = 0;
+        for(DateItem d : this._dates){
+            if(d.isSelected()){
+                return i;
+            }
+            i++;
+        }
+
+        return -1;
     }
 
     public class DateViewHolder extends RecyclerView.ViewHolder {
