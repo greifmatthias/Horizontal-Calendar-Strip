@@ -41,6 +41,8 @@ public class HorizontalCalendar extends LinearLayout {
     private RecyclerViewTouchHandler _tileclickHandler;
     private RecyclerView.OnScrollListener _stripscrollHandler;
 
+    private Date _request_selected;
+
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -92,6 +94,9 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     public void setSelected(Date date){
+        this._request_selected = date;
+
+//        Update data
         ((Adapter)this._rvDates.getAdapter()).setSelected(date);
 
 //        Pass to listener
@@ -178,20 +183,38 @@ public class HorizontalCalendar extends LinearLayout {
                 }
 
 //                    Check date
-                Calendar clastvisible = ((Adapter) recyclerView.getAdapter()).getItem(lastvisible).getDate();
-                _tvMonth.setText(new SimpleDateFormat("MMMM").format(clastvisible.getTime()));
-                _tvYear.setText(new SimpleDateFormat("yyyy").format(clastvisible.getTime()));
+                String tvMonth_text = _tvMonth.getText().toString();
+                String tvYear_text = _tvYear.getText().toString();
+                Calendar firstvisible = ((Adapter) recyclerView.getAdapter()).getItem(layoutManager.findFirstVisibleItemPosition()).getDate();
+                _tvMonth.setText(new SimpleDateFormat("MMMM").format(firstvisible.getTime()));
+                _tvYear.setText(new SimpleDateFormat("yyyy").format(firstvisible.getTime()));
+
+                if(!(tvMonth_text.equals(_tvMonth.getText().toString()) &&
+                        tvYear_text.equals(_tvYear.getText().toString()))){
+                    _listener.labelChanged(firstvisible.getTime());
+                }
             }
         };
         this._rvDates.addOnScrollListener(_stripscrollHandler);
+
+//        Ensure set selected date if requested
+        if(_request_selected != null){
+            this.setSelected(_request_selected);
+        }
     }
 
     private onChangeListener _listener;
     public interface onChangeListener{
         public void selectChanged(Date date);
+        public void labelChanged(Date sourceDate);
     }
 
     public void setOnChanged(onChangeListener listener){
         this._listener = listener;
+
+//        Ensure set selected date if requested
+        if(_request_selected != null){
+            this.setSelected(_request_selected);
+        }
     }
 }
