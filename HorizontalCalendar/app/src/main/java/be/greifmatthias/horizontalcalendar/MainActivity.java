@@ -22,6 +22,9 @@ public class MainActivity extends Activity {
 
 //        Calendar
         final HorizontalCalendar calendar = (HorizontalCalendar)findViewById(R.id.hcCalendar);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, -35);
+        calendar.setSelected(c.getTime());
 
 //        TileLayout layout = new TileLayout(R.layout.sample_selected, R.layout.sample_default) {
 //            @Override
@@ -40,11 +43,12 @@ public class MainActivity extends Activity {
 
                 ((TextView)findViewById(R.id.tvTest)).setText(c.getTime().toLocaleString());
             }
-        });
 
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH, -25);
-        calendar.setSelected(c.getTime());
+            @Override
+            public void labelChanged(Date sourceDate) {
+
+            }
+        });
 
 //        Github button
         Button btnGit = findViewById(R.id.btnGit);
