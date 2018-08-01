@@ -4,6 +4,7 @@
         <attr name="showYear" format="boolean" />
         <attr name="labelColor_month" format="color" />
         <attr name="labelColor_year" format="color" />
+        <attr name="labelShow" format="boolean"></attr>
         <attr name="labelPosition" format="enum">
             <enum name="left" value="0"/>
             <enum name="right" value="1"/>

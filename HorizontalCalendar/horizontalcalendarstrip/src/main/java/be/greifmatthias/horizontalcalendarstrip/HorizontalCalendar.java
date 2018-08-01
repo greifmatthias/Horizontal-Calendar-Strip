@@ -26,12 +26,15 @@ public class HorizontalCalendar extends LinearLayout {
     private int _labelColor_month;
     private int _labelColor_year;
     private int _labelPosition;
+    private boolean _showLabel;
 
     private boolean _defaultShowYear = false;
     private int _defaultLabelColor_Month = Color.argb(255,0,0,0);
     private int _defaultLabelColor_Year = Color.argb(200,0,0,0);;
     private int _defaultLabelPosition = 0;
+    private boolean _defaultShowLabel = true;
 
+    private LinearLayout _llLabel;
     private TextView _tvMonth;
     private TextView _tvYear;
     private RecyclerView _rvDates;
@@ -58,6 +61,7 @@ public class HorizontalCalendar extends LinearLayout {
             this._labelColor_month = a.getInteger(R.styleable.HorizontalCalendar_labelColor_month, this._defaultLabelColor_Month);
             this._labelColor_year = a.getInteger(R.styleable.HorizontalCalendar_labelColor_year, this._defaultLabelColor_Year);
             this._labelPosition = a.getInteger(R.styleable.HorizontalCalendar_labelPosition, this._defaultLabelPosition);
+            this._showLabel = a.getBoolean(R.styleable.HorizontalCalendar_labelShow, this._defaultShowLabel);
         } finally {
             a.recycle();
         }
@@ -67,6 +71,7 @@ public class HorizontalCalendar extends LinearLayout {
         inflater.inflate(R.layout.strip_control, this, true);
 
 //        Get controls
+        this._llLabel = (LinearLayout)findViewById(R.id.llLabel);
         this._tvMonth = (TextView)findViewById(R.id.tvMonth);
         this._tvYear = (TextView) findViewById(R.id.tvYear);
         this._rvDates = (RecyclerView)findViewById(R.id.rvDates);
@@ -198,8 +203,22 @@ public class HorizontalCalendar extends LinearLayout {
         this._rvDates.addOnScrollListener(_stripscrollHandler);
 
 //        Ensure set selected date if requested
-        if(_request_selected != null){
-            this.setSelected(_request_selected);
+        if(this._request_selected != null){
+            this.setSelected(this._request_selected);
+        }
+
+//        Setup UI
+        this.showLabel(this._showLabel);
+    }
+
+    public void showLabel(boolean show){
+        this._showLabel = show;
+
+//        Update UI
+        if(show){
+            this._llLabel.setVisibility(VISIBLE);
+        }else{
+            this._llLabel.setVisibility(GONE);
         }
     }
 
