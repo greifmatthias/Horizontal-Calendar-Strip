@@ -19,9 +19,9 @@ dependencies {
 }
 
 ## TODO (Near future functionalities)
-* ~~Custom date tiles, kind of possible at the moment, need some improvements
+* ~~Custom date tiles, kind of possible at the moment, need some improvements~~
 * Label styling
-* ~~Default selection
+* ~~Default selection~~
 * Min/max daterange 
 
 ## Licensing
