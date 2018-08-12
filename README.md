@@ -22,7 +22,8 @@ dependencies {
 * ~~Custom date tiles, kind of possible at the moment, need some improvements~~
 * Label styling
 * ~~Default selection~~
-* Min/max daterange 
+* Min/max daterange
+* Documentations
 
 ## Licensing
 Be free to use. References are appreciated, but not required.
