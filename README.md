@@ -8,7 +8,7 @@ Want a quick check if it is something you need? Install a sample from the Google
 
 ## What can this already do?
 * Basic horizontal scroll picker
-* Click callbacks on date selection
+* Date selection callbacks
 
 ## Installation
 This project is available on the JCenter Repo, which means easy installation.
@@ -19,9 +19,9 @@ dependencies {
 }
 
 ## TODO (Near future functionalities)
-* Custom date tiles, kind of possible at the moment, need some improvements
+* ~~Custom date tiles, kind of possible at the moment, need some improvements
 * Label styling
-* Default selection
+* ~~Default selection
 * Min/max daterange 
 
 ## Licensing
